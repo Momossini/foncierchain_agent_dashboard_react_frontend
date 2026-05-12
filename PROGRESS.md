@@ -1,7 +1,7 @@
 # Progression du Projet - Portail Agent FoncierChain
 
 ## État Actuel
-**Phase en cours** : Phase 3 - Layout et Composants UI de Base (Terminée)
+**Phase en cours** : Phase 4 - Authentification (Terminée)
 
 ---
 
@@ -55,21 +55,29 @@
 - [x] Création des pages d'erreur (`ForbiddenPage`, `NotFoundPage`)
 - [x] Initialisation de la page de login et de son formulaire
 
+---
+
+## Phase 4 : Authentification ✅
+### Tâches terminées
+- [x] Finalisation de `LoginForm.tsx` avec React Hook Form + Zod
+- [x] Intégration de la mutation de login et gestion du token
+- [x] Amélioration de `ProtectedRoute` pour gérer la vérification de session
+- [x] Gestion des erreurs de connexion et états de chargement
+
 ### Décisions prises
-- Sidebar avec navigation filtrée selon les rôles utilisateur.
-- Utilisation d'un `AppShell` pour centraliser la structure globale.
-- Intégration de `react-hot-toast` pour un feedback utilisateur fluide.
+- Utilisation de `react-hook-form` avec le resolver Zod pour une validation robuste.
+- Gestion centralisée de l'auth via le hook `useAuth`.
 
 ### Prochaine étape
-- **Phase 4 : Authentification**
-    - Implémentation complète du flux de login
-    - Gestion de la session et rafraîchissement des tokens
-    - Redirections automatiques
+- **Phase 5 : Dashboard Agent**
+    - Création de la page Dashboard
+    - Ajout des raccourcis d'actions
+    - Affichage des indicateurs simples et dernières opérations
 
 ---
 
-## Phase 4 : Authentification ⏳ (À venir)
-- [ ] Finaliser `LoginPage.tsx` et `LoginForm.tsx` avec React Hook Form + Zod
-- [ ] Gérer le stockage sécurisé du token
-- [ ] Implémenter le rafraîchissement automatique du token
-- [ ] Gérer les erreurs de connexion
+## Phase 5 : Dashboard Agent ⏳ (À venir)
+- [ ] Créer `DashboardPage.tsx`
+- [ ] Implémenter les cartes de raccourcis
+- [ ] Afficher les indicateurs de performance (stats parcelles)
+- [ ] Lister les activités récentes
