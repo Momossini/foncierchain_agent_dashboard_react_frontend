@@ -1,7 +1,7 @@
 # Progression du Projet - Portail Agent FoncierChain
 
 ## État Actuel
-**Phase en cours** : Phase 4 - Authentification (Terminée)
+**Phase en cours** : Phase 5 - Dashboard Agent (Terminée)
 
 ---
 
@@ -21,12 +21,6 @@
 - [x] Configuration des alias d'importation (`@/`)
 - [x] Création de la structure de dossiers recommandée
 
-### Décisions prises
-- Utilisation de React 19 comme initialisé dans le projet de base.
-- Utilisation de Tailwind CSS 4 (nouvelle version avec plugin Vite dédié).
-- Organisation des dossiers selon la spécification fournie.
-- Mise en place d'un proxy Vite pour éviter les problèmes de CORS en développement.
-
 ---
 
 ## Phase 2 : Fondations Techniques et Architecture ✅
@@ -38,11 +32,6 @@
 - [x] Création des hooks personnalisés (`useAuth`, `useCurrentUser`, `useParcels`, etc.)
 - [x] Mise en place du routing avec React Router
 - [x] Implémentation des Guards (`ProtectedRoute`, `RoleGuard`)
-
-### Décisions prises
-- Centralisation des types dans `src/types/`.
-- Utilisation de TanStack Query pour la gestion du cache et de l'état asynchrone.
-- Implémentation d'un système de Guard basé sur le rôle utilisateur pour protéger les routes sensibles.
 
 ---
 
@@ -64,20 +53,30 @@
 - [x] Amélioration de `ProtectedRoute` pour gérer la vérification de session
 - [x] Gestion des erreurs de connexion et états de chargement
 
+---
+
+## Phase 5 : Dashboard Agent ✅
+### Tâches terminées
+- [x] Création de `DashboardPage.tsx`
+- [x] Implémentation des cartes de raccourcis d'actions
+- [x] Affichage des indicateurs de performance (Total parcelles, transferts, alertes)
+- [x] Liste des activités récentes (basée sur les dernières parcelles)
+- [x] Intégration de la page dans le système de routage
+
 ### Décisions prises
-- Utilisation de `react-hook-form` avec le resolver Zod pour une validation robuste.
-- Gestion centralisée de l'auth via le hook `useAuth`.
+- Le Dashboard affiche les parcelles récentes en guise d'activités récentes.
+- Les raccourcis sont visuellement mis en avant pour faciliter le travail de l'agent.
 
 ### Prochaine étape
-- **Phase 5 : Dashboard Agent**
-    - Création de la page Dashboard
-    - Ajout des raccourcis d'actions
-    - Affichage des indicateurs simples et dernières opérations
+- **Phase 6 : Liste et Recherche de Parcelles**
+    - Création de la page de liste des parcelles
+    - Barre de recherche et filtres
+    - Tableau de résultats paginé
 
 ---
 
-## Phase 5 : Dashboard Agent ⏳ (À venir)
-- [ ] Créer `DashboardPage.tsx`
-- [ ] Implémenter les cartes de raccourcis
-- [ ] Afficher les indicateurs de performance (stats parcelles)
-- [ ] Lister les activités récentes
+## Phase 6 : Liste et Recherche de Parcelles ⏳ (À venir)
+- [ ] Créer `ParcelsListPage.tsx`
+- [ ] Implémenter `ParcelSearchBar` et `ParcelFilters`
+- [ ] Créer `ParcelTable` avec badges de statut
+- [ ] Gérer la pagination et les états vides
