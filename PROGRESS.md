@@ -1,7 +1,7 @@
 # Progression du Projet - Portail Agent FoncierChain
 
 ## État Actuel
-**Phase en cours** : Phase 1 - Setup et Initialisation du Projet (Terminée)
+**Phase en cours** : Phase 3 - Layout et Composants UI de Base (Terminée)
 
 ---
 
@@ -27,20 +27,49 @@
 - Organisation des dossiers selon la spécification fournie.
 - Mise en place d'un proxy Vite pour éviter les problèmes de CORS en développement.
 
-### Blocages éventuels
-- Aucun pour le moment.
+---
 
-### Prochaine étape
-- **Phase 2 : Fondations Techniques et Architecture**
-    - Définition des types TypeScript
-    - Client API et HTTP (Axios)
-    - Gestion de l'état (TanStack Query)
-    - Routing et Navigation
+## Phase 2 : Fondations Techniques et Architecture ✅
+### Tâches terminées
+- [x] Définition des types TypeScript (`api.ts`, `auth.ts`, `parcel.ts`)
+- [x] Configuration du client Axios avec interceptors (JWT injection + gestion 401)
+- [x] Création des modules API (`auth.ts`, `parcels.ts`, `history.ts`, `transfer.ts`)
+- [x] Configuration de TanStack Query avec un `QueryProvider`
+- [x] Création des hooks personnalisés (`useAuth`, `useCurrentUser`, `useParcels`, etc.)
+- [x] Mise en place du routing avec React Router
+- [x] Implémentation des Guards (`ProtectedRoute`, `RoleGuard`)
+
+### Décisions prises
+- Centralisation des types dans `src/types/`.
+- Utilisation de TanStack Query pour la gestion du cache et de l'état asynchrone.
+- Implémentation d'un système de Guard basé sur le rôle utilisateur pour protéger les routes sensibles.
 
 ---
 
-## Phase 2 : Fondations Techniques et Architecture ⏳ (À venir)
-- [ ] Définir les types core
-- [ ] Configurer le client Axios avec interceptors
-- [ ] Configurer TanStack Query Provider
-- [ ] Mettre en place le routing de base et les routes protégées
+## Phase 3 : Layout et Composants UI de Base ✅
+### Tâches terminées
+- [x] Création du layout principal `AgentAppShell`
+- [x] Implémentation de la `Topbar` (profil, logout) et `Sidebar` (navigation réactive aux rôles)
+- [x] Création des composants de feedback : `LoadingState`, `ErrorState`, `EmptyState`
+- [x] Configuration des notifications avec `react-hot-toast`
+- [x] Création des pages d'erreur (`ForbiddenPage`, `NotFoundPage`)
+- [x] Initialisation de la page de login et de son formulaire
+
+### Décisions prises
+- Sidebar avec navigation filtrée selon les rôles utilisateur.
+- Utilisation d'un `AppShell` pour centraliser la structure globale.
+- Intégration de `react-hot-toast` pour un feedback utilisateur fluide.
+
+### Prochaine étape
+- **Phase 4 : Authentification**
+    - Implémentation complète du flux de login
+    - Gestion de la session et rafraîchissement des tokens
+    - Redirections automatiques
+
+---
+
+## Phase 4 : Authentification ⏳ (À venir)
+- [ ] Finaliser `LoginPage.tsx` et `LoginForm.tsx` avec React Hook Form + Zod
+- [ ] Gérer le stockage sécurisé du token
+- [ ] Implémenter le rafraîchissement automatique du token
+- [ ] Gérer les erreurs de connexion
