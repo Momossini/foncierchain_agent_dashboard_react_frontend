@@ -3,6 +3,7 @@ import { ProtectedRoute } from '@/components/layout/ProtectedRoute';
 import { RoleGuard } from '@/components/layout/RoleGuard';
 import { AgentAppShell } from '@/components/layout/AgentAppShell';
 import { LoginPage } from '@/pages/LoginPage';
+import { DashboardPage } from '@/pages/DashboardPage';
 import { ForbiddenPage } from '@/pages/ForbiddenPage';
 import { NotFoundPage } from '@/pages/NotFoundPage';
 
@@ -31,7 +32,7 @@ export const router = createBrowserRouter([
           },
           {
             path: '/dashboard',
-            element: <Placeholder name="Dashboard" />,
+            element: <DashboardPage />,
           },
           {
             path: '/parcels',
