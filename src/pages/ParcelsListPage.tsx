@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 import { useParcels, useSearchParcels } from '@/hooks/useParcels';
 import { ParcelSearchBar } from '@/components/parcels/ParcelSearchBar';
 import { ParcelTable } from '@/components/parcels/ParcelTable';
-import { LoadingState } from '@/components/feedback/LoadingState';
+import { ParcelTableSkeleton } from '@/components/parcels/ParcelTableSkeleton';
 import { ErrorState } from '@/components/feedback/ErrorState';
 import { EmptyState } from '@/components/feedback/EmptyState';
 import { HasRole } from '@/components/layout/HasRole';
@@ -62,7 +62,7 @@ export const ParcelsListPage = () => {
 
       {/* Content */}
       {isLoading ? (
-        <LoadingState message="Chargement des parcelles..." />
+        <ParcelTableSkeleton />
       ) : error ? (
         <ErrorState
           message="Impossible de récupérer la liste des parcelles."
