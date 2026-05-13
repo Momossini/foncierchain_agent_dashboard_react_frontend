@@ -1,7 +1,7 @@
 # Progression du Projet - Portail Agent FoncierChain
 
 ## État Actuel
-**Phase en cours** : Phase 9 - Transfert de Propriété (Terminée)
+**Phase en cours** : Phase 10 - Historique de Parcelle (Terminée)
 
 ---
 
@@ -78,24 +78,33 @@
 ## Phase 9 : Transfert de Propriété ✅
 ### Tâches terminées
 - [x] Création de `ParcelTransferPage.tsx`
-- [x] Implémentation de `TransferOwnershipForm.tsx` avec validation Zod
-- [x] Mise en place de la mutation `transferParcel` via `useTransferParcel`
-- [x] Gestion des statuts non transférables dans l'UI
-- [x] Intégration au système de routage avec protection par rôle
-
-### Décisions prises
-- Affichage comparatif (Ancien vs Nouveau propriétaire) pour plus de clarté.
-- Blocage préventif de l'action de transfert si la parcelle est déjà transférée ou rejetée.
-
-### Prochaine étape
-- **Phase 10 : Historique de Parcelle**
-    - Création de la page ou section historique
-    - Implémentation de la timeline verticale
-    - Affichage des détails de chaque événement
+- [x] Implémentation de `TransferOwnershipForm.tsx`
+- [x] Mise en place de la mutation `transferParcel`
 
 ---
 
-## Phase 10 : Historique de Parcelle ⏳ (À venir)
-- [ ] Créer `ParcelHistoryPage.tsx`
-- [ ] Implémenter `HistoryTimeline.tsx`
-- [ ] Connecter à l'API `GET /history`
+## Phase 10 : Historique de Parcelle ✅
+### Tâches terminées
+- [x] Création de `ParcelHistoryPage.tsx`
+- [x] Implémentation de `HistoryTimeline.tsx` et `HistoryTimelineItem.tsx`
+- [x] Mise en place d'une interface chronologique verticale
+- [x] Gestion des types d'actions (CREATED, TRANSFERRED, REJECTED) avec icônes et couleurs dédiées
+- [x] Intégration au système de routage
+
+### Décisions prises
+- Timeline chronologique descendante pour montrer les événements les plus récents en premier.
+- Utilisation de badges de couleur pour distinguer rapidement le type d'opération (Création, Mutation, Rejet).
+- Affichage comparatif des propriétaires dans la timeline pour tracer visuellement les flux.
+
+### Prochaine étape
+- **Phase 11 : Contrôle des Rôles et Autorisations**
+    - Finalisation des gardes de rôles (ADMIN, AGENT, VIEWER)
+    - Masquage fin des actions interdites
+    - Tests de sécurité UI
+
+---
+
+## Phase 11 : Contrôle des Rôles et Autorisations ⏳ (À venir)
+- [ ] Compléter `RoleGuard.tsx`
+- [ ] Désactiver les boutons d'action pour le rôle `VIEWER`
+- [ ] Tester les accès 403

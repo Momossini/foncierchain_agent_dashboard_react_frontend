@@ -8,16 +8,9 @@ import { ParcelsListPage } from '@/pages/ParcelsListPage';
 import { ParcelCreatePage } from '@/pages/ParcelCreatePage';
 import { ParcelDetailPage } from '@/pages/ParcelDetailPage';
 import { ParcelTransferPage } from '@/pages/ParcelTransferPage';
+import { ParcelHistoryPage } from '@/pages/ParcelHistoryPage';
 import { ForbiddenPage } from '@/pages/ForbiddenPage';
 import { NotFoundPage } from '@/pages/NotFoundPage';
-
-// Pages placeholders (seront créées en phase 3/4)
-const Placeholder = ({ name }: { name: string }) => (
-  <div className="p-8">
-    <h1 className="text-2xl font-bold">{name}</h1>
-    <p>Cette page est en cours de développement.</p>
-  </div>
-);
 
 export const router = createBrowserRouter([
   {
@@ -64,7 +57,7 @@ export const router = createBrowserRouter([
           },
           {
             path: '/parcels/:id/history',
-            element: <Placeholder name="Parcel History" />,
+            element: <ParcelHistoryPage />,
           },
         ],
       },
