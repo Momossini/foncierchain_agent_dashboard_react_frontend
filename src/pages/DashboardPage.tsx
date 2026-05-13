@@ -7,10 +7,21 @@ import {
   Clock,
   AlertTriangle,
   ChevronRight,
-  TrendingUp
+  TrendingUp,
+  type LucideIcon
 } from 'lucide-react';
 import { useCurrentUser } from '@/hooks/useCurrentUser';
 import { useParcels } from '@/hooks/useParcels';
+import { HasRole } from '@/components/layout/HasRole';
+import type { UserRole } from '@/types';
+
+interface Shortcut {
+  name: string;
+  href: string;
+  icon: LucideIcon;
+  description: string;
+  roles?: UserRole[];
+}
 
 export const DashboardPage = () => {
   const { data: user } = useCurrentUser();
@@ -22,7 +33,7 @@ export const DashboardPage = () => {
     { label: 'Alertes / Doublons', value: 2, icon: AlertTriangle, color: 'text-orange-600', bg: 'bg-orange-50' },
   ];
 
-  const shortcuts = [
+  const shortcuts: Shortcut[] = [
     { name: 'Créer une parcelle', href: '/parcels/new', icon: PlusCircle, description: 'Enregistrer un nouveau titre foncier', roles: ['ADMIN', 'AGENT'] },
     { name: 'Rechercher', href: '/parcels', icon: Search, description: 'Consulter le registre des parcelles' },
     { name: 'Transférer', href: '/parcels', icon: ArrowRightLeft, description: 'Initier une mutation de propriété', roles: ['ADMIN', 'AGENT'] },
@@ -59,10 +70,7 @@ export const DashboardPage = () => {
         </h2>
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
           {shortcuts.map((shortcut) => {
-            if (shortcut.roles && user && !shortcut.roles.includes(user.role)) {
-              return null;
-            }
-            return (
+            const content = (
               <Link
                 key={shortcut.name}
                 to={shortcut.href}
@@ -78,6 +86,16 @@ export const DashboardPage = () => {
                 <p className="text-sm text-gray-500 mt-1">{shortcut.description}</p>
               </Link>
             );
+
+            if (shortcut.roles) {
+              return (
+                <HasRole key={shortcut.name} allowedRoles={shortcut.roles}>
+                  {content}
+                </HasRole>
+              );
+            }
+
+            return content;
           })}
         </div>
       </div>
