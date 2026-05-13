@@ -5,6 +5,7 @@ import { AgentAppShell } from '@/components/layout/AgentAppShell';
 import { LoginPage } from '@/pages/LoginPage';
 import { DashboardPage } from '@/pages/DashboardPage';
 import { ParcelsListPage } from '@/pages/ParcelsListPage';
+import { ParcelCreatePage } from '@/pages/ParcelCreatePage';
 import { ForbiddenPage } from '@/pages/ForbiddenPage';
 import { NotFoundPage } from '@/pages/NotFoundPage';
 
@@ -43,7 +44,7 @@ export const router = createBrowserRouter([
             path: '/parcels/new',
             element: (
               <RoleGuard allowedRoles={['ADMIN', 'AGENT']}>
-                <Placeholder name="Create Parcel" />
+                <ParcelCreatePage />
               </RoleGuard>
             ),
           },
