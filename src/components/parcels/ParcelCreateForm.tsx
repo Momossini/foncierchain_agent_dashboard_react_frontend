@@ -4,6 +4,7 @@ import * as z from 'zod';
 import { useCreateParcel, useValidateParcel } from '@/hooks/useParcels';
 import { Loader2, AlertCircle, CheckCircle, Info } from 'lucide-react';
 import { useState } from 'react';
+import { getErrorMessage } from '@/lib/errors';
 
 const parcelSchema = z.object({
   parcelUid: z.string().min(3, 'UID requis (min 3 caractères)'),
@@ -178,7 +179,7 @@ export const ParcelCreateForm = () => {
         {createError && (
           <div className="p-4 bg-red-50 border border-red-100 rounded-lg flex items-start text-red-700 text-sm">
             <AlertCircle className="w-5 h-5 mr-3 flex-shrink-0" />
-            <p>{(createError as any)?.response?.data?.message || 'Une erreur est survenue lors de la création.'}</p>
+            <p>{getErrorMessage((createError as any)?.response?.data?.error?.code)}</p>
           </div>
         )}
 

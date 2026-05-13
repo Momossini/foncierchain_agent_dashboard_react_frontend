@@ -3,6 +3,7 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import * as z from 'zod';
 import { useAuth } from '@/hooks/useAuth';
 import { Loader2, AlertCircle } from 'lucide-react';
+import { getErrorMessage } from '@/lib/errors';
 
 const loginSchema = z.object({
   email: z.string().email('Email invalide'),
@@ -40,7 +41,7 @@ export const LoginForm = () => {
       {error && (
         <div className="mb-6 p-4 bg-red-50 border border-red-100 rounded-lg flex items-start text-red-700 text-sm">
           <AlertCircle className="w-5 h-5 mr-3 flex-shrink-0" />
-          <p>{(error as any)?.response?.data?.message || 'Identifiants invalides ou erreur serveur.'}</p>
+          <p>{getErrorMessage((error as any)?.response?.data?.error?.code)}</p>
         </div>
       )}
 

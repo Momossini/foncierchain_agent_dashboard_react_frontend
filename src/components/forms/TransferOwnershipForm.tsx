@@ -4,6 +4,7 @@ import * as z from 'zod';
 import { useTransferParcel } from '@/hooks/useTransferParcel';
 import type { Parcel } from '@/types';
 import { Loader2, AlertCircle, UserMinus, UserPlus, Info } from 'lucide-react';
+import { getErrorMessage } from '@/lib/errors';
 
 const transferSchema = z.object({
   newOwnerName: z.string().min(3, 'Nom du nouveau propriétaire requis'),
@@ -121,7 +122,7 @@ export const TransferOwnershipForm = ({ parcel }: TransferOwnershipFormProps) =>
         {error && (
           <div className="p-4 bg-red-50 border border-red-100 rounded-lg flex items-start text-red-700 text-sm">
             <AlertCircle className="w-5 h-5 mr-3 flex-shrink-0" />
-            <p>{(error as any)?.response?.data?.message || 'Une erreur est survenue lors du transfert.'}</p>
+            <p>{getErrorMessage((error as any)?.response?.data?.error?.code)}</p>
           </div>
         )}
 

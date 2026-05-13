@@ -1,5 +1,5 @@
-import { useParams, Link, useNavigate } from 'react-router-dom';
-import { ArrowLeft, History, ArrowRightLeft, FileText } from 'lucide-react';
+import { useParams, Link, useNavigate, useSearchParams } from 'react-router-dom';
+import { ArrowLeft, History, ArrowRightLeft, FileText, CheckCircle } from 'lucide-react';
 import { useParcel } from '@/hooks/useParcel';
 import { ParcelSummaryCard } from '@/components/parcels/ParcelSummaryCard';
 import { ParcelDetailCard } from '@/components/parcels/ParcelDetailCard';
@@ -11,7 +11,10 @@ import { HasRole } from '@/components/layout/HasRole';
 export const ParcelDetailPage = () => {
   const { id } = useParams<{ id: string }>();
   const navigate = useNavigate();
+  const [searchParams] = useSearchParams();
   const { data: parcel, isLoading, error } = useParcel(id);
+
+  const transferSuccess = searchParams.get('transferSuccess') === 'true';
 
   if (isLoading) {
     return <LoadingState message="Chargement de la fiche parcelle..." />;
@@ -29,6 +32,18 @@ export const ParcelDetailPage = () => {
 
   return (
     <div className="space-y-6">
+      {transferSuccess && (
+        <div className="bg-green-50 border border-green-200 text-green-800 p-4 rounded-xl flex items-center shadow-sm animate-in fade-in slide-in-from-top-4 duration-500">
+          <div className="bg-green-100 p-2 rounded-full mr-4 text-green-600">
+            <CheckCircle size={20} />
+          </div>
+          <div>
+            <p className="font-bold">Transfert réussi !</p>
+            <p className="text-sm opacity-90">La mutation de propriété a été enregistrée sur la blockchain.</p>
+          </div>
+        </div>
+      )}
+
       {/* Action Bar */}
       <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
         <div className="flex items-center space-x-4">

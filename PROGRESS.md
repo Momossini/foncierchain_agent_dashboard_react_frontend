@@ -115,3 +115,12 @@
 ### Audit des phases précédentes (Rattrapage) ✅
 - [x] Création de `src/lib/errors.ts` pour la centralisation des messages d'erreur
 - [x] Ajout des composants de feedback manquants : `Skeleton`, `ConfirmDialog`
+
+---
+
+## Phase 12 : UX et Feedback Utilisateur ✅
+### Tâches terminées
+- [x] Intégration de la gestion centralisée des erreurs dans tous les formulaires métier
+- [x] Implémentation des états de chargement via des Skeletons (`ParcelTableSkeleton`)
+- [x] Amélioration du feedback visuel après mutation (toasts + bannière de succès)
+- [x] Mise en place de la navigation automatique après succès d'une opération
