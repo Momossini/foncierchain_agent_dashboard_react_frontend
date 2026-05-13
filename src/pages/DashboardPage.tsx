@@ -50,7 +50,7 @@ export const DashboardPage = () => {
       {/* Stats Grid */}
       <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
         {stats.map((stat) => (
-          <div key={stat.label} className="bg-white p-6 rounded-xl shadow-sm border border-gray-100 flex items-center">
+            <div key={stat.label} className="card p-6 flex items-center">
             <div className={`p-3 rounded-lg ${stat.bg} ${stat.color} mr-4`}>
               <stat.icon size={24} />
             </div>
@@ -74,7 +74,7 @@ export const DashboardPage = () => {
               <Link
                 key={shortcut.name}
                 to={shortcut.href}
-                className="group bg-white p-6 rounded-xl shadow-sm border border-gray-100 hover:border-blue-300 hover:shadow-md transition-all"
+                className="group card p-6 hover:border-brand-300 hover:shadow-md transition-all"
               >
                 <div className="flex items-center justify-between mb-4">
                   <div className="p-2 bg-gray-50 rounded-lg group-hover:bg-blue-50 group-hover:text-blue-600 transition-colors">
@@ -101,8 +101,8 @@ export const DashboardPage = () => {
       </div>
 
       {/* Recent Activity Placeholder */}
-      <div className="bg-white rounded-xl shadow-sm border border-gray-100 overflow-hidden">
-        <div className="px-6 py-4 border-b border-gray-100 flex items-center justify-between">
+      <div className="card overflow-hidden">
+        <div className="px-6 py-4 border-b border-slate-100 flex items-center justify-between">
           <h2 className="text-lg font-semibold text-gray-900 flex items-center">
             <Clock className="mr-2 text-blue-600" size={20} />
             Activités récentes
@@ -129,7 +129,9 @@ export const DashboardPage = () => {
                       <p className="text-xs text-gray-500">{parcel.address}, {parcel.city}</p>
                     </div>
                   </div>
-                  <span className="text-xs text-gray-400">{new Date(parcel.createdAt).toLocaleDateString()}</span>
+                  <span className="text-xs text-gray-400">
+                    {parcel.createdAt ? new Date(parcel.createdAt).toLocaleDateString() : 'N/A'}
+                  </span>
                 </div>
               ))}
             </div>

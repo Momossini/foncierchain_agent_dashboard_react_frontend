@@ -1,14 +1,25 @@
-import { LogOut, User } from 'lucide-react';
+import { LogOut, User, Menu } from 'lucide-react';
 import { useCurrentUser } from '@/hooks/useCurrentUser';
 import { useAuth } from '@/hooks/useAuth';
 
-export const Topbar = () => {
+interface TopbarProps {
+  onMenuClick: () => void;
+}
+
+export const Topbar = ({ onMenuClick }: TopbarProps) => {
   const { data: user } = useCurrentUser();
   const { logout } = useAuth();
 
   return (
     <header className="h-16 bg-white border-b border-gray-200 flex items-center justify-between px-6 fixed top-0 right-0 left-0 lg:left-64 z-30">
       <div className="flex items-center lg:hidden">
+        <button
+          onClick={onMenuClick}
+          className="p-2 -ml-2 mr-2 text-gray-600 hover:bg-gray-100 rounded-md"
+          aria-label="Ouvrir le menu"
+        >
+          <Menu size={24} />
+        </button>
         <span className="text-xl font-bold text-blue-600">FoncierChain</span>
       </div>
 
