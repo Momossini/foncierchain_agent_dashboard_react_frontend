@@ -6,12 +6,11 @@ import { ParcelDetailCard } from '@/components/parcels/ParcelDetailCard';
 import { BlockchainProofCard } from '@/components/blockchain/BlockchainProofCard';
 import { LoadingState } from '@/components/feedback/LoadingState';
 import { ErrorState } from '@/components/feedback/ErrorState';
-import { useCurrentUser } from '@/hooks/useCurrentUser';
+import { HasRole } from '@/components/layout/HasRole';
 
 export const ParcelDetailPage = () => {
   const { id } = useParams<{ id: string }>();
   const navigate = useNavigate();
-  const { data: user } = useCurrentUser();
   const { data: parcel, isLoading, error } = useParcel(id);
 
   if (isLoading) {
@@ -51,7 +50,7 @@ export const ParcelDetailPage = () => {
             Historique
           </Link>
 
-          {(user?.role === 'ADMIN' || user?.role === 'AGENT') && (
+          <HasRole allowedRoles={['ADMIN', 'AGENT']}>
             <Link
               to={`/parcels/${parcel.id}/transfer`}
               className="inline-flex items-center px-4 py-2 bg-blue-600 text-white font-semibold rounded-lg hover:bg-blue-700 transition-colors shadow-md text-sm"
@@ -59,7 +58,7 @@ export const ParcelDetailPage = () => {
               <ArrowRightLeft className="mr-2" size={18} />
               Transférer
             </Link>
-          )}
+          </HasRole>
         </div>
       </div>
 
@@ -74,23 +73,25 @@ export const ParcelDetailPage = () => {
         <div className="space-y-6">
           <BlockchainProofCard txHash={parcel.txHash} />
 
-          <div className="bg-white rounded-xl shadow-sm border border-gray-100 p-6">
-            <h3 className="font-bold text-gray-900 text-sm uppercase tracking-widest mb-4 flex items-center">
-              <FileText className="mr-2 text-gray-400" size={18} />
-              Actions rapides
-            </h3>
-            <div className="space-y-2 text-sm">
-              <button className="w-full text-left px-3 py-2 text-blue-600 hover:bg-blue-50 rounded-md transition-colors">
-                Générer un certificat
-              </button>
-              <button className="w-full text-left px-3 py-2 text-blue-600 hover:bg-blue-50 rounded-md transition-colors">
-                Exporter en PDF
-              </button>
-              <button className="w-full text-left px-3 py-2 text-blue-600 hover:bg-blue-50 rounded-md transition-colors">
-                Signaler une anomalie
-              </button>
+          <HasRole allowedRoles={['ADMIN', 'AGENT']}>
+            <div className="bg-white rounded-xl shadow-sm border border-gray-100 p-6">
+              <h3 className="font-bold text-gray-900 text-sm uppercase tracking-widest mb-4 flex items-center">
+                <FileText className="mr-2 text-gray-400" size={18} />
+                Actions rapides
+              </h3>
+              <div className="space-y-2 text-sm">
+                <button className="w-full text-left px-3 py-2 text-blue-600 hover:bg-blue-50 rounded-md transition-colors">
+                  Générer un certificat
+                </button>
+                <button className="w-full text-left px-3 py-2 text-blue-600 hover:bg-blue-50 rounded-md transition-colors">
+                  Exporter en PDF
+                </button>
+                <button className="w-full text-left px-3 py-2 text-blue-600 hover:bg-blue-50 rounded-md transition-colors">
+                  Signaler une anomalie
+                </button>
+              </div>
             </div>
-          </div>
+          </HasRole>
         </div>
       </div>
     </div>

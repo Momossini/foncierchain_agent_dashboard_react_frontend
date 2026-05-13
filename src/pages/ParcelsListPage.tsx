@@ -7,10 +7,9 @@ import { ParcelTable } from '@/components/parcels/ParcelTable';
 import { LoadingState } from '@/components/feedback/LoadingState';
 import { ErrorState } from '@/components/feedback/ErrorState';
 import { EmptyState } from '@/components/feedback/EmptyState';
-import { useCurrentUser } from '@/hooks/useCurrentUser';
+import { HasRole } from '@/components/layout/HasRole';
 
 export const ParcelsListPage = () => {
-  const { data: user } = useCurrentUser();
   const [searchQuery, setSearchQuery] = useState('');
 
   // Si on a une recherche, on utilise useSearchParcels, sinon useParcels
@@ -34,7 +33,7 @@ export const ParcelsListPage = () => {
           <p className="text-gray-600">Gérez et consultez l'ensemble des titres fonciers enregistrés.</p>
         </div>
 
-        {(user?.role === 'ADMIN' || user?.role === 'AGENT') && (
+        <HasRole allowedRoles={['ADMIN', 'AGENT']}>
           <Link
             to="/parcels/new"
             className="inline-flex items-center px-4 py-2 bg-blue-600 text-white font-semibold rounded-lg hover:bg-blue-700 transition-colors shadow-md"
@@ -42,7 +41,7 @@ export const ParcelsListPage = () => {
             <Plus className="mr-2" size={20} />
             Nouvelle parcelle
           </Link>
-        )}
+        </HasRole>
       </div>
 
       {/* Controls */}

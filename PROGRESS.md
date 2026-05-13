@@ -104,7 +104,14 @@
 
 ---
 
-## Phase 11 : Contrôle des Rôles et Autorisations ⏳ (À venir)
-- [ ] Compléter `RoleGuard.tsx`
-- [ ] Désactiver les boutons d'action pour le rôle `VIEWER`
-- [ ] Tester les accès 403
+## Phase 11 : Contrôle des Rôles et Autorisations ✅
+### Tâches terminées
+- [x] Implémentation du composant `HasRole` pour l'affichage conditionnel
+- [x] Amélioration du `RoleGuard.tsx` (états de chargement et redirections)
+- [x] Masquage des actions restreintes (création, transfert, actions rapides) pour le rôle `VIEWER`
+- [x] Protection des routes sensibles par rôle
+- [x] Tests automatisés (Playwright) et vérification manuelle des accès 403
+
+### Audit des phases précédentes (Rattrapage) ✅
+- [x] Création de `src/lib/errors.ts` pour la centralisation des messages d'erreur
+- [x] Ajout des composants de feedback manquants : `Skeleton`, `ConfirmDialog`

@@ -1,16 +1,22 @@
 import { NavLink } from 'react-router-dom';
-import { LayoutDashboard, Database, PlusCircle, Shield } from 'lucide-react';
-import { useCurrentUser } from '@/hooks/useCurrentUser';
+import { LayoutDashboard, Database, PlusCircle, Shield, type LucideIcon } from 'lucide-react';
+import { HasRole } from './HasRole';
+import type { UserRole } from '@/types';
 
-const navigation = [
+interface NavigationItem {
+  name: string;
+  href: string;
+  icon: LucideIcon;
+  roles?: UserRole[];
+}
+
+const navigation: NavigationItem[] = [
   { name: 'Dashboard', href: '/dashboard', icon: LayoutDashboard },
   { name: 'Parcelles', href: '/parcels', icon: Database },
   { name: 'Créer une parcelle', href: '/parcels/new', icon: PlusCircle, roles: ['ADMIN', 'AGENT'] },
 ];
 
 export const Sidebar = () => {
-  const { data: user } = useCurrentUser();
-
   return (
     <aside className="fixed inset-y-0 left-0 w-64 bg-slate-900 text-white z-40 hidden lg:flex flex-col">
       <div className="h-16 flex items-center px-6 border-b border-slate-800">
@@ -20,11 +26,7 @@ export const Sidebar = () => {
 
       <nav className="flex-1 py-6 px-4 space-y-1">
         {navigation.map((item) => {
-          if (item.roles && user && !item.roles.includes(user.role)) {
-            return null;
-          }
-
-          return (
+          const content = (
             <NavLink
               key={item.name}
               to={item.href}
@@ -40,6 +42,16 @@ export const Sidebar = () => {
               {item.name}
             </NavLink>
           );
+
+          if (item.roles) {
+            return (
+              <HasRole key={item.name} allowedRoles={item.roles}>
+                {content}
+              </HasRole>
+            );
+          }
+
+          return content;
         })}
       </nav>
 
