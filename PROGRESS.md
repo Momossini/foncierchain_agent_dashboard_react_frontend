@@ -124,3 +124,13 @@
 - [x] Implémentation des états de chargement via des Skeletons (`ParcelTableSkeleton`)
 - [x] Amélioration du feedback visuel après mutation (toasts + bannière de succès)
 - [x] Mise en place de la navigation automatique après succès d'une opération
+
+---
+
+## Phase 13 : Design et Styling ✅
+### Tâches terminées
+- [x] Configuration du thème Tailwind v4 avec couleurs de marque et statuts
+- [x] Implémentation d'une navigation mobile réactive avec menu hamburger
+- [x] Création de classes utilitaires CSS pour les composants répétitifs (btn, card, input)
+- [x] Amélioration de l'accessibilité avec des labels ARIA
+- [x] Standardisation du design system sur le Dashboard et le registre

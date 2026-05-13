@@ -36,7 +36,8 @@ export const ParcelsListPage = () => {
         <HasRole allowedRoles={['ADMIN', 'AGENT']}>
           <Link
             to="/parcels/new"
-            className="inline-flex items-center px-4 py-2 bg-blue-600 text-white font-semibold rounded-lg hover:bg-blue-700 transition-colors shadow-md"
+            className="btn-primary"
+            aria-label="Créer une nouvelle parcelle"
           >
             <Plus className="mr-2" size={20} />
             Nouvelle parcelle
