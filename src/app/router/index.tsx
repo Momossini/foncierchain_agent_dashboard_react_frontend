@@ -4,6 +4,7 @@ import { RoleGuard } from '@/components/layout/RoleGuard';
 import { AgentAppShell } from '@/components/layout/AgentAppShell';
 import { LoginPage } from '@/pages/LoginPage';
 import { DashboardPage } from '@/pages/DashboardPage';
+import { ParcelsListPage } from '@/pages/ParcelsListPage';
 import { ForbiddenPage } from '@/pages/ForbiddenPage';
 import { NotFoundPage } from '@/pages/NotFoundPage';
 
@@ -36,7 +37,7 @@ export const router = createBrowserRouter([
           },
           {
             path: '/parcels',
-            element: <Placeholder name="Parcels List" />,
+            element: <ParcelsListPage />,
           },
           {
             path: '/parcels/new',

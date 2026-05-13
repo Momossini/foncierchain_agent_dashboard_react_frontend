@@ -1,7 +1,7 @@
 # Progression du Projet - Portail Agent FoncierChain
 
 ## État Actuel
-**Phase en cours** : Phase 5 - Dashboard Agent (Terminée)
+**Phase en cours** : Phase 6 - Liste et Recherche de Parcelles (Terminée)
 
 ---
 
@@ -63,20 +63,31 @@
 - [x] Liste des activités récentes (basée sur les dernières parcelles)
 - [x] Intégration de la page dans le système de routage
 
+---
+
+## Phase 6 : Liste et Recherche de Parcelles ✅
+### Tâches terminées
+- [x] Création de `ParcelsListPage.tsx`
+- [x] Implémentation de `ParcelSearchBar` avec debounce
+- [x] Création de `ParcelTable` avec badges de statut et liens d'action
+- [x] Intégration de la recherche via `useSearchParcels`
+- [x] Gestion des états de chargement, d'erreur et liste vide
+- [x] Intégration au système de routage
+
 ### Décisions prises
-- Le Dashboard affiche les parcelles récentes en guise d'activités récentes.
-- Les raccourcis sont visuellement mis en avant pour faciliter le travail de l'agent.
+- Utilisation d'un debounce de 500ms sur la barre de recherche pour optimiser les appels API.
+- Mise en place d'un tableau responsive avec des liens directs vers le détail, le transfert et l'historique.
 
 ### Prochaine étape
-- **Phase 6 : Liste et Recherche de Parcelles**
-    - Création de la page de liste des parcelles
-    - Barre de recherche et filtres
-    - Tableau de résultats paginé
+- **Phase 7 : Création de Parcelle**
+    - Création du formulaire de création de parcelle
+    - Intégration de la validation Zod
+    - Gestion de la pré-validation et des erreurs de doublons
 
 ---
 
-## Phase 6 : Liste et Recherche de Parcelles ⏳ (À venir)
-- [ ] Créer `ParcelsListPage.tsx`
-- [ ] Implémenter `ParcelSearchBar` et `ParcelFilters`
-- [ ] Créer `ParcelTable` avec badges de statut
-- [ ] Gérer la pagination et les états vides
+## Phase 7 : Création de Parcelle ⏳ (À venir)
+- [ ] Créer `ParcelCreatePage.tsx`
+- [ ] Implémenter `ParcelCreateForm.tsx`
+- [ ] Gérer la mutation `createParcel`
+- [ ] Gérer spécifiquement l'erreur `PARCEL_ALREADY_EXISTS`
