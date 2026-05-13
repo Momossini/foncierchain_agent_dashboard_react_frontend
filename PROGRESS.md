@@ -1,7 +1,7 @@
 # Progression du Projet - Portail Agent FoncierChain
 
 ## État Actuel
-**Phase en cours** : Phase 7 - Création de Parcelle (Terminée)
+**Phase en cours** : Phase 9 - Transfert de Propriété (Terminée)
 
 ---
 
@@ -63,22 +63,39 @@
 - [x] Création de `ParcelCreatePage.tsx` et `ParcelCreateForm.tsx`
 - [x] Implémentation de la validation Zod pour le formulaire
 - [x] Ajout de la fonctionnalité de pré-validation d'UID
-- [x] Gestion des mutations de création et des erreurs métier (doublons)
-- [x] Intégration au système de routage avec protection par rôle
-
-### Décisions prises
-- Ajout d'un bouton "Vérifier" pour l'UID afin de donner un feedback immédiat avant soumission.
-- Utilisation de `mutateAsync` pour la validation afin de gérer proprement la promesse dans l'UI.
-
-### Prochaine étape
-- **Phase 8 : Détail de Parcelle**
-    - Création de la fiche détail de parcelle
-    - Affichage des preuves numériques (txHash)
-    - Actions contextuelles
+- [x] Gestion des mutations de création et des erreurs métier
 
 ---
 
-## Phase 8 : Détail de Parcelle ⏳ (À venir)
-- [ ] Créer `ParcelDetailPage.tsx`
-- [ ] Implémenter `ParcelDetailCard.tsx` et `BlockchainProofCard.tsx`
-- [ ] Gérer l'affichage de la géométrie (si disponible)
+## Phase 8 : Détail de Parcelle ✅
+### Tâches terminées
+- [x] Création de `ParcelDetailPage.tsx`
+- [x] Implémentation des cartes de résumé et de détail
+- [x] Implémentation de `BlockchainProofCard`
+
+---
+
+## Phase 9 : Transfert de Propriété ✅
+### Tâches terminées
+- [x] Création de `ParcelTransferPage.tsx`
+- [x] Implémentation de `TransferOwnershipForm.tsx` avec validation Zod
+- [x] Mise en place de la mutation `transferParcel` via `useTransferParcel`
+- [x] Gestion des statuts non transférables dans l'UI
+- [x] Intégration au système de routage avec protection par rôle
+
+### Décisions prises
+- Affichage comparatif (Ancien vs Nouveau propriétaire) pour plus de clarté.
+- Blocage préventif de l'action de transfert si la parcelle est déjà transférée ou rejetée.
+
+### Prochaine étape
+- **Phase 10 : Historique de Parcelle**
+    - Création de la page ou section historique
+    - Implémentation de la timeline verticale
+    - Affichage des détails de chaque événement
+
+---
+
+## Phase 10 : Historique de Parcelle ⏳ (À venir)
+- [ ] Créer `ParcelHistoryPage.tsx`
+- [ ] Implémenter `HistoryTimeline.tsx`
+- [ ] Connecter à l'API `GET /history`

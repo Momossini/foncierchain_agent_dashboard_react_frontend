@@ -6,6 +6,8 @@ import { LoginPage } from '@/pages/LoginPage';
 import { DashboardPage } from '@/pages/DashboardPage';
 import { ParcelsListPage } from '@/pages/ParcelsListPage';
 import { ParcelCreatePage } from '@/pages/ParcelCreatePage';
+import { ParcelDetailPage } from '@/pages/ParcelDetailPage';
+import { ParcelTransferPage } from '@/pages/ParcelTransferPage';
 import { ForbiddenPage } from '@/pages/ForbiddenPage';
 import { NotFoundPage } from '@/pages/NotFoundPage';
 
@@ -50,13 +52,13 @@ export const router = createBrowserRouter([
           },
           {
             path: '/parcels/:id',
-            element: <Placeholder name="Parcel Detail" />,
+            element: <ParcelDetailPage />,
           },
           {
             path: '/parcels/:id/transfer',
             element: (
               <RoleGuard allowedRoles={['ADMIN', 'AGENT']}>
-                <Placeholder name="Transfer Parcel" />
+                <ParcelTransferPage />
               </RoleGuard>
             ),
           },
