@@ -13,6 +13,7 @@ import {
 import { useCurrentUser } from '@/hooks/useCurrentUser';
 import { useParcels } from '@/hooks/useParcels';
 import { HasRole } from '@/components/layout/HasRole';
+import { ActivityChart } from '@/components/dashboard/ActivityChart';
 import type { UserRole } from '@/types';
 
 interface Shortcut {
@@ -62,10 +63,55 @@ export const DashboardPage = () => {
         ))}
       </div>
 
+      {/* Activity and Statistics */}
+      <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+        <div className="lg:col-span-2 card p-6">
+          <div className="flex items-center justify-between mb-6">
+            <h2 className="text-lg font-semibold text-gray-900 flex items-center">
+              <TrendingUp className="mr-2 text-blue-600" size={20} />
+              Activité du registre
+            </h2>
+            <div className="flex items-center space-x-2 text-xs font-medium text-gray-500">
+              <span className="flex items-center">
+                <span className="h-2 w-2 bg-brand-500 rounded-full mr-1"></span>
+                Transactions
+              </span>
+            </div>
+          </div>
+          <ActivityChart data={[12, 18, 15, 25, 20, 10, 8]} className="mt-4" />
+        </div>
+
+        <div className="card p-6 bg-slate-900 text-white border-none shadow-lg">
+          <h2 className="text-lg font-semibold mb-4 flex items-center">
+            <Database className="mr-2 text-brand-400" size={20} />
+            État du Réseau
+          </h2>
+          <div className="space-y-4">
+            <div className="flex items-center justify-between">
+              <span className="text-sm text-slate-400">Statut</span>
+              <span className="text-xs font-bold uppercase tracking-widest text-green-400">Opérationnel</span>
+            </div>
+            <div className="flex items-center justify-between">
+              <span className="text-sm text-slate-400">Dernier Bloc</span>
+              <span className="text-sm font-mono">#458,291</span>
+            </div>
+            <div className="flex items-center justify-between">
+              <span className="text-sm text-slate-400">Temps de réponse</span>
+              <span className="text-sm font-mono">14ms</span>
+            </div>
+            <div className="pt-4 mt-4 border-t border-slate-800">
+              <Link to="/blockchain" className="text-xs text-brand-400 hover:text-brand-300 font-bold uppercase tracking-widest flex items-center">
+                Explorer le registre <ChevronRight size={14} className="ml-1" />
+              </Link>
+            </div>
+          </div>
+        </div>
+      </div>
+
       {/* Shortcuts */}
       <div>
         <h2 className="text-lg font-semibold text-gray-900 mb-4 flex items-center">
-          <TrendingUp className="mr-2 text-blue-600" size={20} />
+          <PlusCircle className="mr-2 text-blue-600" size={20} />
           Actions rapides
         </h2>
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6">

@@ -9,6 +9,8 @@ import { ParcelCreatePage } from '@/pages/ParcelCreatePage';
 import { ParcelDetailPage } from '@/pages/ParcelDetailPage';
 import { ParcelTransferPage } from '@/pages/ParcelTransferPage';
 import { ParcelHistoryPage } from '@/pages/ParcelHistoryPage';
+import { ProfilePage } from '@/pages/ProfilePage';
+import { BlockchainRegistryPage } from '@/pages/BlockchainRegistryPage';
 import { ForbiddenPage } from '@/pages/ForbiddenPage';
 import { NotFoundPage } from '@/pages/NotFoundPage';
 
@@ -58,6 +60,14 @@ export const router = createBrowserRouter([
           {
             path: '/parcels/:id/history',
             element: <ParcelHistoryPage />,
+          },
+          {
+            path: '/profile',
+            element: <ProfilePage />,
+          },
+          {
+            path: '/blockchain',
+            element: <BlockchainRegistryPage />,
           },
         ],
       },

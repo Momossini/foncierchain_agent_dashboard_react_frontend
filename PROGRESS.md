@@ -44,4 +44,14 @@ Le portail Agent FoncierChain est désormais complet et prêt pour une démonstr
 
 ---
 
-## État Final : **PRÊT POUR LIVRAISON** 🚀
+## Phase 16 : Améliorations Optionnelles ✅
+### Tâches terminées
+- [x] Implémentation d'un dashboard avancé avec graphiques d'activité (SVG)
+- [x] Ajout d'une vue "Registre Blockchain" détaillée pour le suivi des transactions
+- [x] Création de la page "Mon Profil Agent" avec gestion des informations de compte
+- [x] Intégration de la navigation enrichie dans la Sidebar et la Topbar
+- [x] Mise en place de hooks de données simulés pour les transactions blockchain
+
+---
+
+## État Final : **PROJET COMPLET (MVP + BONUS)** 🚀

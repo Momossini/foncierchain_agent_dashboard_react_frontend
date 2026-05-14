@@ -1,4 +1,5 @@
 import { LogOut, User, Menu } from 'lucide-react';
+import { Link } from 'react-router-dom';
 import { useCurrentUser } from '@/hooks/useCurrentUser';
 import { useAuth } from '@/hooks/useAuth';
 
@@ -27,7 +28,7 @@ export const Topbar = ({ onMenuClick }: TopbarProps) => {
 
       <div className="flex items-center space-x-4">
         {user && (
-          <div className="flex items-center space-x-3 border-r pr-4 border-gray-200">
+          <Link to="/profile" className="flex items-center space-x-3 border-r pr-4 border-gray-200 hover:opacity-80 transition-opacity">
             <div className="text-right">
               <p className="text-sm font-semibold text-gray-900">{user.firstname} {user.lastname}</p>
               <p className="text-xs text-gray-500 uppercase tracking-wider">{user.role}</p>
@@ -35,7 +36,7 @@ export const Topbar = ({ onMenuClick }: TopbarProps) => {
             <div className="h-10 w-10 rounded-full bg-blue-100 flex items-center justify-center text-blue-600">
               <User size={20} />
             </div>
-          </div>
+          </Link>
         )}
 
         <button
