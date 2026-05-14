@@ -39,7 +39,7 @@ test.describe('Role Based Access Control', () => {
 
   test('VIEWER should not see "Nouvelle parcelle" button on list page', async ({ page }) => {
     await page.goto('/parcels');
-    await expect(page.getByText('Registre des Parcelles')).toBeVisible();
+    await expect(page.getByRole('heading', { name: 'Registre des Parcelles' })).toBeVisible();
     await expect(page.getByText('Nouvelle parcelle')).not.toBeVisible();
   });
 
@@ -53,7 +53,7 @@ test.describe('Role Based Access Control', () => {
 
   test('VIEWER should not see "Créer une parcelle" shortcut on dashboard', async ({ page }) => {
     await page.goto('/dashboard');
-    await expect(page.getByText('Tableau de bord')).toBeVisible();
+    await expect(page.getByRole('heading', { name: 'Tableau de bord' })).toBeVisible();
     await expect(page.getByText('Créer une parcelle')).not.toBeVisible();
   });
 });
