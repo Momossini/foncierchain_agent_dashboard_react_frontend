@@ -1,24 +1,27 @@
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import * as z from 'zod';
-import { useCreateParcel, useValidateParcel } from '@/hooks/useParcels';
-import { Loader2, AlertCircle, CheckCircle, Info } from 'lucide-react';
-import { useState } from 'react';
+import { useCreateParcel, useValidateParcel, useParcels } from '@/hooks/useParcels';
+import { Loader2, AlertCircle, CheckCircle, Info, Sparkles } from 'lucide-react';
+import { useState, useEffect } from 'react';
 import { getErrorMessage } from '@/lib/errors';
+import { generateParcelUID, formatOwnerId } from '@/lib/parcelUtils';
 
 const parcelSchema = z.object({
-  parcelUid: z.string().min(3, 'UID requis (min 3 caractères)'),
+  parcelUid: z.string().min(3, 'UID requis'),
   address: z.string().min(5, 'Adresse requise'),
   district: z.string().min(2, 'District requis'),
   city: z.string().min(2, 'Ville requise'),
   currentOwnerName: z.string().min(3, 'Nom du propriétaire requis'),
-  currentOwnerIdentifier: z.string().min(0),
+  ownerIdType: z.enum(['CNI', 'PSP']),
+  ownerIdNumber: z.string().min(5, 'Numéro de document requis'),
   status: z.enum(['ACTIVE', 'PENDING', 'UNDER_REVIEW']),
 });
 
 type ParcelFormValues = z.infer<typeof parcelSchema>;
 
 export const ParcelCreateForm = () => {
+  const { data: existingParcels } = useParcels();
   const { mutate: createParcel, isPending: isCreating, error: createError } = useCreateParcel();
   const { mutateAsync: validateParcel, isPending: isValidating } = useValidateParcel();
   const [validationResult, setValidationResult] = useState<{ valid: boolean; message: string } | null>(null);
@@ -27,6 +30,7 @@ export const ParcelCreateForm = () => {
     register,
     handleSubmit,
     watch,
+    setValue,
     formState: { errors },
   } = useForm<ParcelFormValues>({
     resolver: zodResolver(parcelSchema),
@@ -36,12 +40,25 @@ export const ParcelCreateForm = () => {
       district: '',
       city: '',
       currentOwnerName: '',
-      currentOwnerIdentifier: '',
+      ownerIdType: 'CNI',
+      ownerIdNumber: '',
       status: 'ACTIVE',
     },
   });
 
+  const city = watch('city');
   const parcelUid = watch('parcelUid');
+
+  // Auto-generate UID when city changes
+  useEffect(() => {
+    if (city && city.length >= 2) {
+      const newUid = generateParcelUID(city, existingParcels || []);
+      setValue('parcelUid', newUid, { shouldValidate: true });
+      setValidationResult(null); // Reset validation on change
+    } else {
+      setValue('parcelUid', '');
+    }
+  }, [city, existingParcels, setValue]);
 
   const handlePreValidate = async () => {
     if (!parcelUid || parcelUid.length < 3) return;
@@ -49,11 +66,11 @@ export const ParcelCreateForm = () => {
     try {
       const response = await validateParcel({ parcelUid });
       if (response.success) {
-        setValidationResult({ valid: true, message: 'Cet UID est disponible.' });
+        setValidationResult({ valid: true, message: 'Cet identifiant est disponible.' });
       } else {
         setValidationResult({
           valid: false,
-          message: response.error?.message || 'Cet UID est déjà enregistré ou invalide.'
+          message: response.error?.message || 'Cet identifiant est déjà utilisé.'
         });
       }
     } catch (err) {
@@ -61,8 +78,13 @@ export const ParcelCreateForm = () => {
     }
   };
 
-  const onSubmit = (data: ParcelFormValues) => {
-    createParcel(data);
+  const onSubmit = (values: ParcelFormValues) => {
+    const { ownerIdType, ownerIdNumber, ...rest } = values;
+    const formattedData = {
+      ...rest,
+      currentOwnerIdentifier: formatOwnerId(ownerIdType, ownerIdNumber),
+    };
+    createParcel(formattedData);
   };
 
   return (
@@ -77,24 +99,31 @@ export const ParcelCreateForm = () => {
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <div className="space-y-1">
-              <label className="block text-sm font-medium text-gray-700">UID Parcelle *</label>
+              <label className="block text-sm font-medium text-gray-700 flex items-center">
+                UID Parcelle
+                <span className="ml-2 text-[10px] bg-blue-100 text-blue-700 px-1.5 py-0.5 rounded font-bold uppercase tracking-tighter">Automatique</span>
+              </label>
               <div className="flex gap-2">
-                <input
-                  {...register('parcelUid')}
-                  className={`flex-1 px-4 py-2 border rounded-lg outline-none transition-all focus:ring-2 ${
-                    errors.parcelUid ? 'border-red-300 focus:ring-red-200' : 'border-gray-300 focus:ring-blue-200'
-                  }`}
-                  placeholder="ex: PAR-2024-001"
-                />
+                <div className="relative flex-1">
+                  <input
+                    {...register('parcelUid')}
+                    readOnly
+                    className="w-full px-4 py-2 bg-gray-50 border border-gray-200 text-gray-500 rounded-lg outline-none cursor-not-allowed font-mono text-sm"
+                  />
+                  <div className="absolute right-3 top-1/2 -translate-y-1/2 text-blue-400">
+                    <Sparkles size={14} />
+                  </div>
+                </div>
                 <button
                   type="button"
                   onClick={handlePreValidate}
-                  disabled={isValidating || !parcelUid || parcelUid.length < 3}
+                  disabled={isValidating || !parcelUid}
                   className="px-4 py-2 bg-gray-100 text-gray-700 rounded-lg hover:bg-gray-200 disabled:opacity-50 transition-colors text-sm font-medium"
                 >
                   {isValidating ? <Loader2 size={18} className="animate-spin" /> : 'Vérifier'}
                 </button>
               </div>
+              <p className="text-[10px] text-gray-400 mt-1 italic">Cet identifiant est généré automatiquement selon la ville et l'année.</p>
               {errors.parcelUid && <p className="text-xs text-red-600">{errors.parcelUid.message}</p>}
               {validationResult && (
                 <p className={`text-xs mt-1 flex items-center ${validationResult.valid ? 'text-green-600' : 'text-red-600'}`}>
@@ -142,11 +171,19 @@ export const ParcelCreateForm = () => {
             </div>
             <div className="space-y-1">
               <label className="block text-sm font-medium text-gray-700">Ville *</label>
-              <input
+              <select
                 {...register('city')}
-                className="w-full px-4 py-2 border border-gray-300 rounded-lg outline-none focus:ring-2 focus:ring-blue-200"
-                placeholder="ex: Bamako"
-              />
+                className={`w-full px-4 py-2 border rounded-lg outline-none transition-all focus:ring-2 ${
+                    errors.city ? 'border-red-300 focus:ring-red-200' : 'border-gray-300 focus:ring-blue-200'
+                  } bg-white`}
+              >
+                <option value="">Sélectionnez une ville</option>
+                <option value="Brazzaville">Brazzaville</option>
+                <option value="Pointe-Noire">Pointe-Noire</option>
+                <option value="Dolisie">Dolisie</option>
+                <option value="Nkayi">Nkayi</option>
+                <option value="Ouésso">Ouésso</option>
+              </select>
               {errors.city && <p className="text-xs text-red-600">{errors.city.message}</p>}
             </div>
           </div>
@@ -155,23 +192,38 @@ export const ParcelCreateForm = () => {
         {/* Section: Propriétaire */}
         <div className="space-y-4 pt-4">
           <h3 className="text-lg font-semibold text-gray-900 border-b pb-2">Propriétaire actuel</h3>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
             <div className="space-y-1">
               <label className="block text-sm font-medium text-gray-700">Nom complet *</label>
               <input
                 {...register('currentOwnerName')}
-                className="w-full px-4 py-2 border border-gray-300 rounded-lg outline-none focus:ring-2 focus:ring-blue-200"
+                className={`w-full px-4 py-2 border rounded-lg outline-none transition-all focus:ring-2 ${
+                    errors.currentOwnerName ? 'border-red-300 focus:ring-red-200' : 'border-gray-300 focus:ring-blue-200'
+                  }`}
                 placeholder="ex: Jean Dupont"
               />
               {errors.currentOwnerName && <p className="text-xs text-red-600">{errors.currentOwnerName.message}</p>}
             </div>
             <div className="space-y-1">
-              <label className="block text-sm font-medium text-gray-700">Identifiant (CNI/Passport)</label>
+              <label className="block text-sm font-medium text-gray-700">Type de pièce *</label>
+              <select
+                {...register('ownerIdType')}
+                className="w-full px-4 py-2 border border-gray-300 rounded-lg outline-none focus:ring-2 focus:ring-blue-200 bg-white"
+              >
+                <option value="CNI">CNI</option>
+                <option value="PSP">Passeport</option>
+              </select>
+            </div>
+            <div className="space-y-1">
+              <label className="block text-sm font-medium text-gray-700">Numéro de pièce *</label>
               <input
-                {...register('currentOwnerIdentifier')}
-                className="w-full px-4 py-2 border border-gray-300 rounded-lg outline-none focus:ring-2 focus:ring-blue-200"
+                {...register('ownerIdNumber')}
+                className={`w-full px-4 py-2 border rounded-lg outline-none transition-all focus:ring-2 ${
+                    errors.ownerIdNumber ? 'border-red-300 focus:ring-red-200' : 'border-gray-300 focus:ring-blue-200'
+                  }`}
                 placeholder="ex: 123456789"
               />
+              {errors.ownerIdNumber && <p className="text-xs text-red-600">{errors.ownerIdNumber.message}</p>}
             </div>
           </div>
         </div>

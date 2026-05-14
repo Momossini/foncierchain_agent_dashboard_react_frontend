@@ -5,10 +5,12 @@ import { useTransferParcel } from '@/hooks/useTransferParcel';
 import type { Parcel } from '@/types';
 import { Loader2, AlertCircle, UserMinus, UserPlus, Info } from 'lucide-react';
 import { getErrorMessage } from '@/lib/errors';
+import { formatOwnerId } from '@/lib/parcelUtils';
 
 const transferSchema = z.object({
   newOwnerName: z.string().min(3, 'Nom du nouveau propriétaire requis'),
-  newOwnerIdentifier: z.string().min(3, 'Identifiant requis'),
+  ownerIdType: z.enum(['CNI', 'PSP']),
+  ownerIdNumber: z.string().min(5, 'Numéro de document requis'),
   transferType: z.string().min(2, 'Motif de mutation requis'),
   additionalDetails: z.string().optional(),
 });
@@ -29,12 +31,18 @@ export const TransferOwnershipForm = ({ parcel }: TransferOwnershipFormProps) =>
   } = useForm<TransferFormValues>({
     resolver: zodResolver(transferSchema),
     defaultValues: {
+      ownerIdType: 'CNI',
       transferType: 'VENTE',
     },
   });
 
-  const onSubmit = (data: TransferFormValues) => {
-    transferParcel(data);
+  const onSubmit = (values: TransferFormValues) => {
+    const { ownerIdType, ownerIdNumber, ...rest } = values;
+    const formattedData = {
+      ...rest,
+      newOwnerIdentifier: formatOwnerId(ownerIdType, ownerIdNumber),
+    };
+    transferParcel(formattedData);
   };
 
   return (
@@ -73,16 +81,28 @@ export const TransferOwnershipForm = ({ parcel }: TransferOwnershipFormProps) =>
                 />
                 {errors.newOwnerName && <p className="text-xs text-red-600">{errors.newOwnerName.message}</p>}
               </div>
-              <div className="space-y-1">
-                <label className="block text-xs font-medium text-gray-700">Identifiant (CNI/Passport) *</label>
-                <input
-                  {...register('newOwnerIdentifier')}
-                  className={`w-full px-4 py-2 border rounded-lg outline-none transition-all focus:ring-2 ${
-                    errors.newOwnerIdentifier ? 'border-red-300 focus:ring-red-200' : 'border-gray-300 focus:ring-blue-200'
-                  }`}
-                  placeholder="ex: ML-987654321"
-                />
-                {errors.newOwnerIdentifier && <p className="text-xs text-red-600">{errors.newOwnerIdentifier.message}</p>}
+              <div className="grid grid-cols-2 gap-4">
+                <div className="space-y-1">
+                  <label className="block text-xs font-medium text-gray-700">Type de pièce *</label>
+                  <select
+                    {...register('ownerIdType')}
+                    className="w-full px-4 py-2 border border-gray-300 rounded-lg outline-none focus:ring-2 focus:ring-blue-200 bg-white"
+                  >
+                    <option value="CNI">CNI</option>
+                    <option value="PSP">Passeport</option>
+                  </select>
+                </div>
+                <div className="space-y-1">
+                  <label className="block text-xs font-medium text-gray-700">Numéro *</label>
+                  <input
+                    {...register('ownerIdNumber')}
+                    className={`w-full px-4 py-2 border rounded-lg outline-none transition-all focus:ring-2 ${
+                      errors.ownerIdNumber ? 'border-red-300 focus:ring-red-200' : 'border-gray-300 focus:ring-blue-200'
+                    }`}
+                    placeholder="ex: 123456789"
+                  />
+                  {errors.ownerIdNumber && <p className="text-xs text-red-600">{errors.ownerIdNumber.message}</p>}
+                </div>
               </div>
             </div>
           </div>
