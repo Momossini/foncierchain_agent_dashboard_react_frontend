@@ -1,73 +1,81 @@
-# React + TypeScript + Vite
+# Portail Agent FoncierChain
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Ce projet est le tableau de bord frontal pour les agents de la plateforme FoncierChain, une solution de gestion du registre foncier basée sur la technologie blockchain.
 
-Currently, two official plugins are available:
+## 🚀 Technologies
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+- **Vite 8** + **React 19** + **TypeScript**
+- **Tailwind CSS v4** (Design System & Styling)
+- **TanStack Query (React Query) v5** (Gestion d'état serveur & Cache)
+- **React Router v7** (Navigation)
+- **React Hook Form** + **Zod** (Formulaires & Validation)
+- **Axios** (Client HTTP)
+- **Lucide React** (Icônes)
+- **Playwright** (Tests E2E)
 
-## React Compiler
+## 📁 Structure du Projet
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
-
-## Expanding the ESLint configuration
-
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
-
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
-
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+```
+src/
+  api/        # Modules de communication avec le backend (FastAPI)
+  app/        # Configuration globale (Router, Providers)
+  components/ # Composants UI réutilisables (layout, feedback, forms)
+  hooks/      # Hooks personnalisés (auth, data fetching)
+  lib/        # Utilitaires et configuration (axios, errors)
+  pages/      # Composants de pages de haut niveau
+  types/      # Définitions de types TypeScript
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+## 🛠 Installation et Développement
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+### Prérequis
+- Node.js (v18+)
+- pnpm (recommandé) ou npm
 
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+### Installation
+```bash
+pnpm install
 ```
+
+### Lancement du serveur de développement
+```bash
+pnpm dev
+```
+Le serveur sera accessible sur `http://localhost:5173`. Le proxy est configuré pour rediriger les appels `/api` vers `http://localhost:8000`.
+
+### Build de production
+```bash
+pnpm build
+```
+
+## 🌐 Variables d'Environnement
+
+Créez un fichier `.env.local` à la racine :
+```env
+VITE_API_BASE_URL=http://localhost:8000
+```
+
+## 🧪 Tests
+
+Le projet utilise Playwright pour les tests de bout en bout.
+
+```bash
+# Lancer tous les tests
+npx playwright test
+
+# Lancer un test spécifique
+npx playwright test tests/e2e/demo_scenario.spec.ts
+
+# Ouvrir l'interface Playwright
+npx playwright test --ui
+```
+
+## 🔐 Gestion des Rôles (RBAC)
+
+L'application gère trois rôles principaux :
+- **ADMIN** : Accès complet à toutes les fonctionnalités.
+- **AGENT** : Création, consultation et transfert de parcelles.
+- **VIEWER** : Consultation uniquement (lecture seule).
+
+## 📄 Licence
+Propriété de FoncierChain. Tous droits réservés.
