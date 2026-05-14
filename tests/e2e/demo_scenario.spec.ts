@@ -36,11 +36,11 @@ test.describe('Phase 14: Demo Scenario', () => {
     await page.click('text=Créer une parcelle');
     await expect(page).toHaveURL('/parcels/new');
 
-    await page.fill('input[name="parcelUid"]', 'DEMO-123');
+    await page.selectOption('select[name="city"]', 'Brazzaville');
     await page.fill('input[name="address"]', '123 Demo St');
-    await page.fill('input[name="city"]', 'DemoCity');
     await page.fill('input[name="district"]', 'DemoDistrict');
     await page.fill('input[name="currentOwnerName"]', 'Original Owner');
+    await page.fill('input[name="ownerIdNumber"]', 'ID123456');
 
     await page.route('**/api/parcels', async (route) => {
       if (route.request().method() === 'POST') {
@@ -95,7 +95,7 @@ test.describe('Phase 14: Demo Scenario', () => {
 
     // 4. Tentative de doublon
     await page.goto('/parcels/new');
-    await page.fill('input[name="parcelUid"]', 'DEMO-123');
+    await page.selectOption('select[name="city"]', 'Brazzaville');
 
     await page.route('**/api/parcels', async (route) => {
         if (route.request().method() === 'POST') {
@@ -111,9 +111,9 @@ test.describe('Phase 14: Demo Scenario', () => {
       });
 
     await page.fill('input[name="address"]', '123 Demo St');
-    await page.fill('input[name="city"]', 'DemoCity');
     await page.fill('input[name="district"]', 'DemoDistrict');
     await page.fill('input[name="currentOwnerName"]', 'Duplicate Owner');
+    await page.fill('input[name="ownerIdNumber"]', 'ID123456');
     await page.click('button[type="submit"]');
 
     await expect(page.getByText('Cette parcelle est déjà enregistrée dans le système')).toBeVisible();
@@ -124,7 +124,7 @@ test.describe('Phase 14: Demo Scenario', () => {
     await expect(page).toHaveURL('/parcels/p-123/transfer');
 
     await page.fill('input[name="newOwnerName"]', 'New Owner');
-    await page.fill('input[name="newOwnerIdentifier"]', 'ID-999');
+    await page.fill('input[name="ownerIdNumber"]', 'ID-999');
 
     await page.route('**/api/parcels/p-123/transfer', async (route) => {
         await route.fulfill({
@@ -154,14 +154,15 @@ test.describe('Phase 14: Demo Scenario', () => {
             success: true,
             data: {
                 id: 'p-123',
-                parcelUid: 'DEMO-123',
+                parcelUid: 'BZV-001-2026',
                 status: 'TRANSFERRED',
                 currentOwnerName: 'New Owner',
                 address: '123 Demo St',
-                city: 'DemoCity',
+                city: 'Brazzaville',
                 district: 'DemoDistrict',
                 txHash: '0xabc...456',
-                createdAt: new Date().toISOString()
+                createdAt: new Date().toISOString(),
+                updatedAt: new Date().toISOString()
             }
           }),
         });
