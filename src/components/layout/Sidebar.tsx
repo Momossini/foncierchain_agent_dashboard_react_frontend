@@ -15,6 +15,7 @@ const navigation: NavigationItem[] = [
   { name: 'Dashboard', href: '/dashboard', icon: LayoutDashboard },
   { name: 'Parcelles', href: '/parcels', icon: Database },
   { name: 'Créer une parcelle', href: '/parcels/new', icon: PlusCircle, roles: ['ADMIN', 'AGENT'] },
+  { name: 'Registre Blockchain', href: '/blockchain', icon: Shield },
 ];
 
 interface SidebarProps {
