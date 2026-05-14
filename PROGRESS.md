@@ -1,7 +1,7 @@
 # Progression du Projet - Portail Agent FoncierChain
 
 ## État Actuel
-**Phase en cours** : Phase 10 - Historique de Parcelle (Terminée)
+**Phase en cours** : Phase 14 - Intégration Backend et Tests E2E (Terminée)
 
 ---
 
@@ -91,17 +91,6 @@
 - [x] Gestion des types d'actions (CREATED, TRANSFERRED, REJECTED) avec icônes et couleurs dédiées
 - [x] Intégration au système de routage
 
-### Décisions prises
-- Timeline chronologique descendante pour montrer les événements les plus récents en premier.
-- Utilisation de badges de couleur pour distinguer rapidement le type d'opération (Création, Mutation, Rejet).
-- Affichage comparatif des propriétaires dans la timeline pour tracer visuellement les flux.
-
-### Prochaine étape
-- **Phase 11 : Contrôle des Rôles et Autorisations**
-    - Finalisation des gardes de rôles (ADMIN, AGENT, VIEWER)
-    - Masquage fin des actions interdites
-    - Tests de sécurité UI
-
 ---
 
 ## Phase 11 : Contrôle des Rôles et Autorisations ✅
@@ -134,3 +123,19 @@
 - [x] Création de classes utilitaires CSS pour les composants répétitifs (btn, card, input)
 - [x] Amélioration de l'accessibilité avec des labels ARIA
 - [x] Standardisation du design system sur le Dashboard et le registre
+
+---
+
+## Phase 14 : Intégration Backend et Tests E2E ✅
+### Tâches terminées
+- [x] Vérification de l'alignement des modules API avec le backend
+- [x] Validation de la configuration du proxy Vite pour FastAPI
+- [x] Implémentation d'un test de scénario de démo complet (Playwright)
+- [x] Validation du workflow métier : Login -> Création -> Doublon (rejet) -> Transfert -> Historique
+- [x] Confirmation de l'affichage de la preuve numérique (BlockchainProofCard)
+
+### Prochaine étape
+- **Phase 15 : Livraison et Documentation**
+    - Build de production final
+    - Documentation technique et README
+    - Checklist finale de livraison
